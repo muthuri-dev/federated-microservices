@@ -6,9 +6,14 @@ import {
 import { PrismadbService } from './prismadb/prismadb.service';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from './dto/create-user.dto';
-import { CreateResponse, LoginResponse } from './types/user.types';
+import {
+  CreateResponse,
+  LoginResponse,
+  UpdateResponse,
+} from './types/user.types';
 import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './entities/user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -47,5 +52,24 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) throw new BadRequestException('User does not exist');
     return user;
+  }
+
+  async UpdateUser(updateUserDto: UpdateUserDto): Promise<UpdateResponse> {
+    const { id, name, email, password } = updateUserDto;
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        ...(name && { name }),
+        ...(email && { email }),
+        ...(password && { password }),
+      },
+    });
+    return { user };
+  }
+
+  async DeleteUser(id: string): Promise<string> {
+    const user = await this.prisma.user.delete({ where: { id } });
+    if (!user) throw new BadRequestException('User does not exist');
+    return 'Account deleted';
   }
 }
