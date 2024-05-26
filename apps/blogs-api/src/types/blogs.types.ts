@@ -2,28 +2,28 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { Blog } from 'src/entities/blog.entity';
 
 @ObjectType()
-export class ErrorType {
+export class BlogErrorType {
   @Field()
   message: string;
 
-  @Field()
-  code: string;
+  @Field({ nullable: true })
+  code?: string;
 }
 
 @ObjectType()
-export class CreateResponse {
+export class CreateBlogResponse {
   @Field(() => Blog)
   blog: Blog;
 
-  @Field(() => ErrorType, { nullable: true })
-  error?: ErrorType;
+  @Field(() => BlogErrorType, { nullable: true })
+  error?: BlogErrorType;
 }
 
 @ObjectType()
-export class UpdateResponse {
+export class UpdateBlogResponse {
   @Field(() => Blog)
   blog: Blog;
 
-  @Field(() => ErrorType, { nullable: true })
-  error?: ErrorType;
+  @Field(() => BlogErrorType, { nullable: true })
+  error?: BlogErrorType;
 }
