@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BlogsService } from './blogs.service';
 import { Blog } from './entities/blog.entity';
-import { CreateResponse, UpdateResponse } from './types/blogs.types';
+import { CreateBlogResponse, UpdateBlogResponse } from './types/blogs.types';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { CreateBlogDto } from './dto/create-blog.dto';
 
@@ -9,17 +9,17 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 export class BlogsResolver {
   constructor(private readonly blogsService: BlogsService) {}
 
-  @Mutation(() => CreateResponse)
+  @Mutation(() => CreateBlogResponse)
   async createBlog(
     @Args('createInputs') createBlogDto: CreateBlogDto,
-  ): Promise<CreateResponse> {
+  ): Promise<CreateBlogResponse> {
     return await this.blogsService.createBlog(createBlogDto);
   }
 
-  @Mutation(() => UpdateResponse)
+  @Mutation(() => UpdateBlogResponse)
   async updateBlog(
     @Args('updateInputs') updateBlogDto: UpdateBlogDto,
-  ): Promise<UpdateResponse> {
+  ): Promise<UpdateBlogResponse> {
     return await this.blogsService.updateBlog(updateBlogDto);
   }
 

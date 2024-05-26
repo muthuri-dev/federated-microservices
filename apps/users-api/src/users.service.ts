@@ -7,9 +7,9 @@ import { PrismadbService } from './prismadb/prismadb.service';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
-  CreateResponse,
+  CreateUserResponse,
   LoginResponse,
-  UpdateResponse,
+  UpdateUserResponse,
 } from './types/user.types';
 import { LoginUserDto } from './dto/login-user.dto';
 import { User } from './entities/user.entity';
@@ -22,7 +22,7 @@ export class UsersService {
     private readonly configService: ConfigService,
   ) {}
 
-  async CreateUser(createUserDto: CreateUserDto): Promise<CreateResponse> {
+  async CreateUser(createUserDto: CreateUserDto): Promise<CreateUserResponse> {
     const { name, email, password } = createUserDto;
     const isEmail = await this.prisma.user.findUnique({ where: { email } });
     if (isEmail)
@@ -54,7 +54,7 @@ export class UsersService {
     return user;
   }
 
-  async UpdateUser(updateUserDto: UpdateUserDto): Promise<UpdateResponse> {
+  async UpdateUser(updateUserDto: UpdateUserDto): Promise<UpdateUserResponse> {
     const { id, name, email, password } = updateUserDto;
     const user = await this.prisma.user.update({
       where: { id },

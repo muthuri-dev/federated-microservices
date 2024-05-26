@@ -3,9 +3,9 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
-  CreateResponse,
+  CreateUserResponse,
   LoginResponse,
-  UpdateResponse,
+  UpdateUserResponse,
 } from './types/user.types';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -14,10 +14,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Mutation(() => CreateResponse)
+  @Mutation(() => CreateUserResponse)
   async CreateUser(
     @Args('userInput') createUserDto: CreateUserDto,
-  ): Promise<CreateResponse> {
+  ): Promise<CreateUserResponse> {
     return await this.usersService.CreateUser(createUserDto);
   }
 
@@ -38,10 +38,10 @@ export class UsersResolver {
     return await this.usersService.GetUserById(id);
   }
 
-  @Mutation(() => UpdateResponse)
+  @Mutation(() => UpdateUserResponse)
   async UpdateUser(
     @Args('updateInputs') updateUserDto: UpdateUserDto,
-  ): Promise<UpdateResponse> {
+  ): Promise<UpdateUserResponse> {
     const user = await this.usersService.UpdateUser(updateUserDto);
 
     return user;

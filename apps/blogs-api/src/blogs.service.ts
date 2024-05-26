@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismadbService } from './prismadb/prismadb.service';
 import { ConfigService } from '@nestjs/config';
 import { CreateBlogDto } from './dto/create-blog.dto';
-import { CreateResponse, UpdateResponse } from './types/blogs.types';
+import { CreateBlogResponse, UpdateBlogResponse } from './types/blogs.types';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { Blog } from './entities/blog.entity';
 
@@ -13,7 +13,7 @@ export class BlogsService {
     private readonly configService: ConfigService,
   ) {}
 
-  async createBlog(createBlogDto: CreateBlogDto): Promise<CreateResponse> {
+  async createBlog(createBlogDto: CreateBlogDto): Promise<CreateBlogResponse> {
     const { title, short_description, thumbnaill_image, content, user_id } =
       createBlogDto;
     const blog = await this.prisma.blog.create({
@@ -21,7 +21,7 @@ export class BlogsService {
     });
     return { blog };
   }
-  async updateBlog(updateBlogDto: UpdateBlogDto): Promise<UpdateResponse> {
+  async updateBlog(updateBlogDto: UpdateBlogDto): Promise<UpdateBlogResponse> {
     const { title, short_description, thumbnaill_image, content, id } =
       updateBlogDto;
     const blog = await this.prisma.blog.update({
