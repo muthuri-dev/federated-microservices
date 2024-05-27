@@ -1,4 +1,10 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Query,
+  ResolveReference,
+  Resolver,
+} from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -50,5 +56,13 @@ export class UsersResolver {
   @Mutation(() => User)
   async DeleteUser(@Args('id') id: string): Promise<string> {
     return await this.usersService.DeleteUser(id);
+  }
+
+  @ResolveReference()
+  public async resolveReference(reference: {
+    __typename: string;
+    id: string;
+  }): Promise<any> {
+    return await this.usersService.GetUserById(reference.id);
   }
 }
