@@ -1,9 +1,17 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { BlogsService } from './blogs.service';
 import { Blog } from './entities/blog.entity';
 import { CreateBlogResponse, UpdateBlogResponse } from './types/blogs.types';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { CreateBlogDto } from './dto/create-blog.dto';
+import { User } from './entities/user.entity';
 
 @Resolver(() => Blog)
 export class BlogsResolver {
@@ -36,5 +44,10 @@ export class BlogsResolver {
   @Query(() => [Blog])
   async getUserblogs(@Args('user_id') user_id: string): Promise<Blog[]> {
     return await this.blogsService.getUserblogs(user_id);
+  }
+
+  @ResolveField(() => User)
+  public async user(@Parent() blog: Blog): Promise<User | any> {
+    return await { __typename: 'User', id: blog.user_id };
   }
 }
