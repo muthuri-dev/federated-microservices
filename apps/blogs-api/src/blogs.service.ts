@@ -42,4 +42,8 @@ export class BlogsService {
   async getUserblogs(user_id: string): Promise<Blog[]> {
     return await this.prisma.blog.findMany({ where: { user_id } });
   }
+
+  async deleteBlog(id: string): Promise<Blog> {
+    return await this.prisma.blog.delete({ where: { id } });
+  }
 }

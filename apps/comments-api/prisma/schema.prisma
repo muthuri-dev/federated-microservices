@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  user_id    String
+  like       Like[]
+  blog_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([user_id, blog_id])
+  @@map("comments")
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  like       Int
+  user_id    String
+  comment    Comment? @relation(fields: [comment_id], references: [id])
+  comment_id String?
+
+  @@unique([user_id, comment_id])
+  @@index([comment_id])
+  @@map("likes")
+}
