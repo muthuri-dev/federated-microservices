@@ -8,6 +8,7 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { ConfigService } from '@nestjs/config';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ConfigService } from '@nestjs/config';
         federation: 2,
       },
     }),
+    LikesModule,
   ],
   providers: [
     CommentsResolver,

@@ -46,6 +46,11 @@ export class BlogsResolver {
     return await this.blogsService.getUserblogs(user_id);
   }
 
+  @Mutation(() => Blog)
+  async deleteBlog(@Args('id') id: string): Promise<Blog> {
+    return this.blogsService.deleteBlog(id);
+  }
+
   @ResolveField(() => User)
   public async user(@Parent() blog: Blog): Promise<User | any> {
     return await { __typename: 'User', id: blog.user_id };
