@@ -4,6 +4,7 @@ import {
   Parent,
   Query,
   ResolveField,
+  ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
 import { BlogsService } from './blogs.service';
@@ -32,18 +33,18 @@ export class BlogsResolver {
   }
 
   @Query(() => [Blog])
-  async getblogs(): Promise<Blog[]> {
-    return await this.blogsService.getblogs();
+  async getBlogs(): Promise<Blog[]> {
+    return await this.blogsService.getBlogs();
   }
 
   @Query(() => Blog)
-  async getblog(@Args('id') id: string): Promise<Blog> {
-    return await this.blogsService.getblog(id);
+  async getBlog(@Args('id') id: string): Promise<Blog> {
+    return await this.blogsService.getBlog(id);
   }
 
   @Query(() => [Blog])
-  async getUserblogs(@Args('user_id') user_id: string): Promise<Blog[]> {
-    return await this.blogsService.getUserblogs(user_id);
+  async getUserBlogs(@Args('user_id') user_id: string): Promise<Blog[]> {
+    return await this.blogsService.getUserBlogs(user_id);
   }
 
   @Mutation(() => Blog)
@@ -54,5 +55,13 @@ export class BlogsResolver {
   @ResolveField(() => User)
   public async user(@Parent() blog: Blog): Promise<User | any> {
     return await { __typename: 'User', id: blog.user_id };
+  }
+
+  @ResolveReference()
+  public async resolveReference(reference: {
+    __typename: string;
+    id: string;
+  }): Promise<any> {
+    return await this.blogsService.getBlog(reference.id);
   }
 }

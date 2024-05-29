@@ -9,6 +9,6 @@ export class UsersResolver {
 
   @ResolveField(() => [Blog])
   public async blogs(@Parent() user: User): Promise<Blog[]> {
-    return await this.blogsService.getUserblogs(user.id);
+    return await this.blogsService.getUserBlogs(user.id);
   }
 }

@@ -9,6 +9,7 @@ import {
 } from '@nestjs/apollo';
 import { ConfigService } from '@nestjs/config';
 import { LikesModule } from './likes/likes.module';
+import { BlogsResolver } from './blogs.resolver';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LikesModule } from './likes/likes.module';
     CommentsService,
     PrismadbService,
     ConfigService,
+    BlogsResolver,
   ],
 })
 export class CommentsModule {}

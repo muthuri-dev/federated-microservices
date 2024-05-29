@@ -24,4 +24,8 @@ export class CommentsService {
   async getBlogComments(blog_id: string): Promise<Comment[]> {
     return await this.prisma.comment.findMany({ where: { blog_id } });
   }
+
+  async getUserComments(user_id: string): Promise<Comment[]> {
+    return await this.prisma.comment.findMany({ where: { user_id } });
+  }
 }
