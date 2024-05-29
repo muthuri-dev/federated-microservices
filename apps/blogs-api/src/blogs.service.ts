@@ -31,15 +31,15 @@ export class BlogsService {
     return { blog };
   }
 
-  async getblogs(): Promise<Blog[]> {
+  async getBlogs(): Promise<Blog[]> {
     return await this.prisma.blog.findMany({});
   }
 
-  async getblog(id: string): Promise<Blog> {
+  async getBlog(id: string): Promise<Blog> {
     return await this.prisma.blog.findUnique({ where: { id } });
   }
 
-  async getUserblogs(user_id: string): Promise<Blog[]> {
+  async getUserBlogs(user_id: string): Promise<Blog[]> {
     return await this.prisma.blog.findMany({ where: { user_id } });
   }
 
